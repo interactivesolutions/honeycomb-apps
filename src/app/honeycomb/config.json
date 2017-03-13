@@ -5,7 +5,8 @@
     "formData": {
         "apps": "interactivesolutions\\honeycombapps\\app\\forms\\HCAppsForm",
         "apps-permissions": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\PermissionsForm",
-        "apps-roles": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\RolesForm"
+        "apps-roles": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\RolesForm",
+        "apps-tokens": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\HCTokensForm"
     },
     "adminMenu": [
         {
@@ -25,6 +26,12 @@
             "translation": "HCApps::apps_roles.page_title",
             "icon": "fa-puzzle-piece",
             "aclPermission": "interactivesolutions_honeycomb_apps_apps_roles_list"
+        },
+        {
+            "path": "admin\/apps\/tokens",
+            "translation": "HCApps::apps_tokens.page_title",
+            "icon": "fa-check-square-o",
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_tokens_list"
         }
     ],
     "acl": {
@@ -82,6 +89,24 @@
                     "api_v1_interactivesolutions_honeycomb_apps_apps_roles_delete",
                     "api_v1_interactivesolutions_honeycomb_apps_apps_roles_force_delete"
                 ]
+            },
+            {
+                "name": "admin.apps.tokens",
+                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\apps\\HCTokensController",
+                "actions": [
+                    "interactivesolutions_honeycomb_apps_apps_tokens_list",
+                    "interactivesolutions_honeycomb_apps_apps_tokens_create",
+                    "interactivesolutions_honeycomb_apps_apps_tokens_update",
+                    "interactivesolutions_honeycomb_apps_apps_tokens_delete",
+                    "interactivesolutions_honeycomb_apps_apps_tokens_force_delete"
+                ],
+                "actionsApps": [
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_tokens_list",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_tokens_create",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_tokens_update",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_tokens_delete",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_tokens_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -97,7 +122,11 @@
                 "interactivesolutions_honeycomb_apps_apps_roles_list",
                 "interactivesolutions_honeycomb_apps_apps_roles_create",
                 "interactivesolutions_honeycomb_apps_apps_roles_update",
-                "interactivesolutions_honeycomb_apps_apps_roles_delete"
+                "interactivesolutions_honeycomb_apps_apps_roles_delete",
+                "interactivesolutions_honeycomb_apps_apps_tokens_list",
+                "interactivesolutions_honeycomb_apps_apps_tokens_create",
+                "interactivesolutions_honeycomb_apps_apps_tokens_update",
+                "interactivesolutions_honeycomb_apps_apps_tokens_delete"
             ]
         }
     }
