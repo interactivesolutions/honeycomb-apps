@@ -3,7 +3,8 @@
         "serviceProviderNameSpace": "HCApps"
     },
     "formData": {
-        "apps": "interactivesolutions\\honeycombapps\\app\\forms\\HCAppsForm"
+        "apps": "interactivesolutions\\honeycombapps\\app\\forms\\HCAppsForm",
+        "apps-permissions": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\PermissionsForm"
     },
     "adminMenu": [
         {
@@ -11,6 +12,12 @@
             "translation": "HCApps::apps.page_title",
             "icon": "fa-cubes",
             "aclPermission": "interactivesolutions_honeycomb_apps_apps_list"
+        },
+        {
+            "path": "admin\/apps\/permissions",
+            "translation": "HCApps::apps_permissions.page_title",
+            "icon": "fa-gavel",
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_permissions_list"
         }
     ],
     "acl": {
@@ -32,6 +39,24 @@
                     "api_v1_interactivesolutions_honeycomb_apps_apps_delete",
                     "api_v1_interactivesolutions_honeycomb_apps_apps_force_delete"
                 ]
+            },
+            {
+                "name": "admin.apps.permissions",
+                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\apps\\PermissionsController",
+                "actions": [
+                    "interactivesolutions_honeycomb_apps_apps_permissions_list",
+                    "interactivesolutions_honeycomb_apps_apps_permissions_create",
+                    "interactivesolutions_honeycomb_apps_apps_permissions_update",
+                    "interactivesolutions_honeycomb_apps_apps_permissions_delete",
+                    "interactivesolutions_honeycomb_apps_apps_permissions_force_delete"
+                ],
+                "actionsApps": [
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_permissions_list",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_permissions_create",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_permissions_update",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_permissions_delete",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_permissions_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -39,7 +64,11 @@
                 "interactivesolutions_honeycomb_apps_apps_list",
                 "interactivesolutions_honeycomb_apps_apps_create",
                 "interactivesolutions_honeycomb_apps_apps_update",
-                "interactivesolutions_honeycomb_apps_apps_delete"
+                "interactivesolutions_honeycomb_apps_apps_delete",
+                "interactivesolutions_honeycomb_apps_apps_permissions_list",
+                "interactivesolutions_honeycomb_apps_apps_permissions_create",
+                "interactivesolutions_honeycomb_apps_apps_permissions_update",
+                "interactivesolutions_honeycomb_apps_apps_permissions_delete"
             ]
         }
     }
