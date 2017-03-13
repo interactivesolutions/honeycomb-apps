@@ -2,7 +2,7 @@
 
 use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
 
-class PermissionsValidator extends HCCoreFormValidator
+class RolesValidator extends HCCoreFormValidator
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,9 +12,8 @@ class PermissionsValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'name'       => 'required',
-            'controller' => 'required',
-            'action'     => 'required',
+            'name' => 'required',
+            'slug' => 'required',
 
         ];
     }
