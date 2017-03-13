@@ -19,6 +19,8 @@ class CreateHcAppsTokensTable extends Migration {
 			$table->string('app_id', 36)->index('fk_hc_apps_tokens_hc_apps1_idx');
 			$table->date('expiration_date');
 			$table->date('last_used')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

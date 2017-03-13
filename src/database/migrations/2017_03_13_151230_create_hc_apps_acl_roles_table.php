@@ -18,6 +18,8 @@ class CreateHcAppsAclRolesTable extends Migration {
 			$table->integer('count', true);
 			$table->string('name', 36)->unique('name_UNIQUE');
 			$table->string('slug', 768)->unique('slug_UNIQUE');
+            $table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

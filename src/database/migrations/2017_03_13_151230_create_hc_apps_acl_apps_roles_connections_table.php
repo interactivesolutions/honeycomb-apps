@@ -17,6 +17,7 @@ class CreateHcAppsAclAppsRolesConnectionsTable extends Migration {
 			$table->integer('count', true);
 			$table->string('app_id', 36)->index('fk_hc_apps_acl_apps_roles_connections_hc_apps1_idx');
 			$table->string('role_id', 36)->index('fk_hc_apps_acl_apps_roles_connections_hc_apps_acl_roles1_idx');
+            $table->timestamps();
 		});
 	}
 

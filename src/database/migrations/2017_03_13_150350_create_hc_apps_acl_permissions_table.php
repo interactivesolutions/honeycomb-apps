@@ -19,6 +19,8 @@ class CreateHcAppsAclPermissionsTable extends Migration {
 			$table->string('name', 36);
 			$table->string('controller', 768);
 			$table->string('action', 768)->unique('action_UNIQUE');
+            $table->timestamps();
+            $table->softDeletes();
 		});
 	}
 
