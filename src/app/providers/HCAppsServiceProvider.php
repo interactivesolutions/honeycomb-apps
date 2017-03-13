@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombapps\app\providers;
 
 use Illuminate\Support\ServiceProvider;
+use interactivesolutions\honeycombapps\app\console\commands\HCAppsPermissions;
 
 class HCAppsServiceProvider extends ServiceProvider
 {
@@ -11,7 +12,9 @@ class HCAppsServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $commands = [];
+    protected $commands = [
+        HCAppsPermissions::class
+    ];
 
     protected $namespace = 'interactivesolutions\honeycombapps\app\http\controllers';
 
