@@ -1,8 +1,5 @@
 <?php
 
-//interactivesolutions/honeycomb-apps/src/app/routes/routes.apps.php
-
-
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
 {
     Route::get('apps', ['as' => 'admin.apps', 'middleware' => ['acl:interactivesolutions_honeycomb_apps_apps_list'], 'uses' => 'HCAppsController@adminView']);
@@ -46,4 +43,3 @@ Route::group(['prefix' => 'api', 'middleware' => ['web', 'auth-apps']], function
         Route::delete('apps/force', ['as' => 'api.v1.apps.force.multi', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_apps_apps_force_delete'], 'uses' => 'HCAppsController@forceDelete']);
     });
 });
-

@@ -1,21 +1,46 @@
 {
-    "general":
-    {
+    "general": {
         "serviceProviderNameSpace": "HCApps"
     },
-    "formData":
-    [
+    "formData": {
+        "apps": "interactivesolutions\\honeycombapps\\app\\forms\\HCAppsForm"
+    },
+    "adminMenu": [
+        {
+            "path": "admin\/apps",
+            "translation": "HCApps::apps.page_title",
+            "icon": "fa-cubes",
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list"
+        }
     ],
-    "adminMenu":
-    [
-    ],
-    "acl":
-    {
-        "permissions" :
-        [
+    "acl": {
+        "permissions": [
+            {
+                "name": "admin.apps",
+                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\HCAppsController",
+                "actions": [
+                    "interactivesolutions_honeycomb_apps_apps_list",
+                    "interactivesolutions_honeycomb_apps_apps_create",
+                    "interactivesolutions_honeycomb_apps_apps_update",
+                    "interactivesolutions_honeycomb_apps_apps_delete",
+                    "interactivesolutions_honeycomb_apps_apps_force_delete"
+                ],
+                "actionsApps": [
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_list",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_create",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_update",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_delete",
+                    "api_v1_interactivesolutions_honeycomb_apps_apps_force_delete"
+                ]
+            }
         ],
-        "rolesActions" :
-        [
-        ]
+        "rolesActions": {
+            "project-admin": [
+                "interactivesolutions_honeycomb_apps_apps_list",
+                "interactivesolutions_honeycomb_apps_apps_create",
+                "interactivesolutions_honeycomb_apps_apps_update",
+                "interactivesolutions_honeycomb_apps_apps_delete"
+            ]
+        }
     }
 }
