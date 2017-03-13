@@ -12,8 +12,8 @@ class HCTokensValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'app_id' => 'required',
-'expiration_date' => 'required',
+            'app_id'          => 'required',
+            'expiration_date' => 'required',
 
         ];
     }

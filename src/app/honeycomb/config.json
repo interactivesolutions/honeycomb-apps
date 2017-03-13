@@ -4,8 +4,8 @@
     },
     "formData": {
         "apps": "interactivesolutions\\honeycombapps\\app\\forms\\HCAppsForm",
-        "apps-permissions": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\PermissionsForm",
-        "apps-roles": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\RolesForm",
+        "apps-permissions": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\HCPermissionsForm",
+        "apps-roles": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\HCRolesForm",
         "apps-tokens": "interactivesolutions\\honeycombapps\\app\\forms\\apps\\HCTokensForm"
     },
     "adminMenu": [
@@ -13,25 +13,27 @@
             "path": "admin\/apps",
             "translation": "HCApps::apps.page_title",
             "icon": "fa-cubes",
-            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list"
-        },
-        {
-            "path": "admin\/apps\/permissions",
-            "translation": "HCApps::apps_permissions.page_title",
-            "icon": "fa-gavel",
-            "aclPermission": "interactivesolutions_honeycomb_apps_apps_permissions_list"
-        },
-        {
-            "path": "admin\/apps\/roles",
-            "translation": "HCApps::apps_roles.page_title",
-            "icon": "fa-puzzle-piece",
-            "aclPermission": "interactivesolutions_honeycomb_apps_apps_roles_list"
-        },
-        {
-            "path": "admin\/apps\/tokens",
-            "translation": "HCApps::apps_tokens.page_title",
-            "icon": "fa-check-square-o",
-            "aclPermission": "interactivesolutions_honeycomb_apps_apps_tokens_list"
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list",
+            "children": [
+                {
+                    "path": "admin\/apps\/permissions",
+                    "translation": "HCApps::apps_permissions.page_title",
+                    "icon": "fa-gavel",
+                    "aclPermission": "interactivesolutions_honeycomb_apps_apps_permissions_list"
+                },
+                {
+                    "path": "admin\/apps\/roles",
+                    "translation": "HCApps::apps_roles.page_title",
+                    "icon": "fa-puzzle-piece",
+                    "aclPermission": "interactivesolutions_honeycomb_apps_apps_roles_list"
+                },
+                {
+                    "path": "admin\/apps\/tokens",
+                    "translation": "HCApps::apps_tokens.page_title",
+                    "icon": "fa-check-square-o",
+                    "aclPermission": "interactivesolutions_honeycomb_apps_apps_tokens_list"
+                }
+            ]
         }
     ],
     "acl": {
@@ -56,7 +58,7 @@
             },
             {
                 "name": "admin.apps.permissions",
-                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\apps\\PermissionsController",
+                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\apps\\HCPermissionsController",
                 "actions": [
                     "interactivesolutions_honeycomb_apps_apps_permissions_list",
                     "interactivesolutions_honeycomb_apps_apps_permissions_create",
@@ -74,7 +76,7 @@
             },
             {
                 "name": "admin.apps.roles",
-                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\apps\\RolesController",
+                "controller": "interactivesolutions\\honeycombapps\\app\\http\\controllers\\apps\\HCRolesController",
                 "actions": [
                     "interactivesolutions_honeycomb_apps_apps_roles_list",
                     "interactivesolutions_honeycomb_apps_apps_roles_create",

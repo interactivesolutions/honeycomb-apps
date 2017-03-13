@@ -29,8 +29,7 @@ class HCTokensController extends HCBaseController
         if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_tokens_create'))
             $config['actions'][] = 'new';
 
-        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_tokens_update'))
-        {
+        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_tokens_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
@@ -39,7 +38,7 @@ class HCTokensController extends HCBaseController
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
-        $config['filters'] = $this->getFilters ();
+        $config['filters'] = $this->getFilters();
 
         return view('HCCoreUI::admin.content.list', ['config' => $config]);
     }
@@ -52,35 +51,35 @@ class HCTokensController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'value'     => [
-    "type"  => "text",
-    "label" => trans('HCApps::apps_tokens.value'),
-],
-'app_id'     => [
-    "type"  => "text",
-    "label" => trans('HCApps::apps_tokens.app_id'),
-],
-'expiration_date'     => [
-    "type"  => "text",
-    "label" => trans('HCApps::apps_tokens.expiration_date'),
-],
-'last_used'     => [
-    "type"  => "text",
-    "label" => trans('HCApps::apps_tokens.last_used'),
-],
+            'value'           => [
+                "type"  => "text",
+                "label" => trans('HCApps::apps_tokens.value'),
+            ],
+            'app_id'          => [
+                "type"  => "text",
+                "label" => trans('HCApps::apps_tokens.app_id'),
+            ],
+            'expiration_date' => [
+                "type"  => "text",
+                "label" => trans('HCApps::apps_tokens.expiration_date'),
+            ],
+            'last_used'       => [
+                "type"  => "text",
+                "label" => trans('HCApps::apps_tokens.last_used'),
+            ],
 
         ];
     }
 
     /**
-    * Create item
-    *
-    * @param array|null $data
-    * @return mixed
-    */
+     * Create item
+     *
+     * @param array|null $data
+     * @return mixed
+     */
     protected function __create(array $data = null)
     {
-        if(is_null($data))
+        if (is_null($data))
             $data = $this->getInputData();
 
         $record = Tokens::create(array_get($data, 'record'));
@@ -89,11 +88,11 @@ class HCTokensController extends HCBaseController
     }
 
     /**
-    * Updates existing item based on ID
-    *
-    * @param $id
-    * @return mixed
-    */
+     * Updates existing item based on ID
+     *
+     * @param $id
+     * @return mixed
+     */
     protected function __update(string $id)
     {
         $record = Tokens::findOrFail($id);
@@ -106,11 +105,11 @@ class HCTokensController extends HCBaseController
     }
 
     /**
-    * Updates existing specific items based on ID
-    *
-    * @param string $id
-    * @return mixed
-    */
+     * Updates existing specific items based on ID
+     *
+     * @param string $id
+     * @return mixed
+     */
     protected function __updateStrict(string $id)
     {
         Tokens::where('id', $id)->update(request()->all());
@@ -119,33 +118,33 @@ class HCTokensController extends HCBaseController
     }
 
     /**
-    * Delete records table
-    *
-    * @param $list
-    * @return mixed|void
-    */
+     * Delete records table
+     *
+     * @param $list
+     * @return mixed|void
+     */
     protected function __delete(array $list)
     {
         Tokens::destroy($list);
     }
 
     /**
-    * Delete records table
-    *
-    * @param $list
-    * @return mixed|void
-    */
+     * Delete records table
+     *
+     * @param $list
+     * @return mixed|void
+     */
     protected function __forceDelete(array $list)
     {
         Tokens::onlyTrashed()->whereIn('id', $list)->forceDelete();
     }
 
     /**
-    * Restore multiple records
-    *
-    * @param $list
-    * @return mixed|void
-    */
+     * Restore multiple records
+     *
+     * @param $list
+     * @return mixed|void
+     */
     protected function __restore(array $list)
     {
         Tokens::whereIn('id', $list)->restore();
@@ -165,10 +164,10 @@ class HCTokensController extends HCBaseController
             $select = Tokens::getFillableFields();
 
         $list = Tokens::with($with)->select($select)
-        // add filters
-        ->where(function ($query) use ($select) {
-            $query = $this->getRequestParameters($query, $select);
-        });
+            // add filters
+            ->where(function ($query) use ($select) {
+                $query = $this->getRequestParameters($query, $select);
+            });
 
         // enabling check for deleted
         $list = $this->checkForDeleted($list);
@@ -182,30 +181,26 @@ class HCTokensController extends HCBaseController
         return $list;
     }
 
-     /**
+    /**
      * List search elements
-
      * @param $list
      * @return mixed
      */
-     protected function listSearch(Builder $list)
-     {
-         if(request()->has('q'))
-         {
-             $parameter = request()->input('q');
+    protected function listSearch(Builder $list)
+    {
+        if (request()->has('q')) {
+            $parameter = request()->input('q');
 
-             $list = $list->where(function ($query) use ($parameter)
-             {
+            $list = $list->where(function ($query) use ($parameter) {
                 $query->where('value', 'LIKE', '%' . $parameter . '%')
-->orWhere('app_id', 'LIKE', '%' . $parameter . '%')
-->orWhere('expiration_date', 'LIKE', '%' . $parameter . '%')
-->orWhere('last_used', 'LIKE', '%' . $parameter . '%')
-;
-             });
-         }
+                    ->orWhere('app_id', 'LIKE', '%' . $parameter . '%')
+                    ->orWhere('expiration_date', 'LIKE', '%' . $parameter . '%')
+                    ->orWhere('last_used', 'LIKE', '%' . $parameter . '%');
+            });
+        }
 
-         return $list;
-     }
+        return $list;
+    }
 
     /**
      * Getting user data on POST call
@@ -219,9 +214,9 @@ class HCTokensController extends HCBaseController
         $_data = request()->all();
 
         array_set($data, 'record.value', array_get($_data, 'value'));
-array_set($data, 'record.app_id', array_get($_data, 'app_id'));
-array_set($data, 'record.expiration_date', array_get($_data, 'expiration_date'));
-array_set($data, 'record.last_used', array_get($_data, 'last_used'));
+        array_set($data, 'record.app_id', array_get($_data, 'app_id'));
+        array_set($data, 'record.expiration_date', array_get($_data, 'expiration_date'));
+        array_set($data, 'record.last_used', array_get($_data, 'last_used'));
 
         return $data;
     }

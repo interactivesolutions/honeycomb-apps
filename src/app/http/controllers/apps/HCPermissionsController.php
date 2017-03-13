@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
-use interactivesolutions\honeycombapps\app\models\apps\Roles;
-use interactivesolutions\honeycombapps\app\validators\apps\RolesValidator;
+use interactivesolutions\honeycombapps\app\models\apps\Permissions;
+use interactivesolutions\honeycombapps\app\validators\apps\PermissionsValidator;
 
-class RolesController extends HCBaseController
+class HCPermissionsController extends HCBaseController
 {
 
     //TODO recordsPerPage setting
@@ -18,23 +18,23 @@ class RolesController extends HCBaseController
     public function adminView()
     {
         $config = [
-            'title'       => trans('HCApps::apps_roles.page_title'),
-            'listURL'     => route('admin.api.apps.roles'),
-            'newFormUrl'  => route('admin.api.form-manager', ['apps-roles-new']),
-            'editFormUrl' => route('admin.api.form-manager', ['apps-roles-edit']),
+            'title'       => trans('HCApps::apps_permissions.page_title'),
+            'listURL'     => route('admin.api.apps.permissions'),
+            'newFormUrl'  => route('admin.api.form-manager', ['apps-permissions-new']),
+            'editFormUrl' => route('admin.api.form-manager', ['apps-permissions-edit']),
             'imagesUrl'   => route('resource.get', ['/']),
             'headers'     => $this->getAdminListHeader(),
         ];
 
-        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_roles_create'))
+        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_permissions_create'))
             $config['actions'][] = 'new';
 
-        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_roles_update')) {
+        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_permissions_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_roles_delete'))
+        if ($this->user()->can('interactivesolutions_honeycomb_apps_apps_permissions_delete'))
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
@@ -51,13 +51,17 @@ class RolesController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'name' => [
+            'name'       => [
                 "type"  => "text",
-                "label" => trans('HCApps::apps_roles.name'),
+                "label" => trans('HCApps::apps_permissions.name'),
             ],
-            'slug' => [
+            'controller' => [
                 "type"  => "text",
-                "label" => trans('HCApps::apps_roles.slug'),
+                "label" => trans('HCApps::apps_permissions.controller'),
+            ],
+            'action'     => [
+                "type"  => "text",
+                "label" => trans('HCApps::apps_permissions.action'),
             ],
 
         ];
@@ -74,7 +78,7 @@ class RolesController extends HCBaseController
         if (is_null($data))
             $data = $this->getInputData();
 
-        $record = Roles::create(array_get($data, 'record'));
+        $record = Permissions::create(array_get($data, 'record'));
 
         return $this->getSingleRecord($record->id);
     }
@@ -87,7 +91,7 @@ class RolesController extends HCBaseController
      */
     protected function __update(string $id)
     {
-        $record = Roles::findOrFail($id);
+        $record = Permissions::findOrFail($id);
 
         $data = $this->getInputData();
 
@@ -104,7 +108,7 @@ class RolesController extends HCBaseController
      */
     protected function __updateStrict(string $id)
     {
-        Roles::where('id', $id)->update(request()->all());
+        Permissions::where('id', $id)->update(request()->all());
 
         return $this->getSingleRecord($id);
     }
@@ -117,7 +121,7 @@ class RolesController extends HCBaseController
      */
     protected function __delete(array $list)
     {
-        Roles::destroy($list);
+        Permissions::destroy($list);
     }
 
     /**
@@ -128,7 +132,7 @@ class RolesController extends HCBaseController
      */
     protected function __forceDelete(array $list)
     {
-        Roles::onlyTrashed()->whereIn('id', $list)->forceDelete();
+        Permissions::onlyTrashed()->whereIn('id', $list)->forceDelete();
     }
 
     /**
@@ -139,7 +143,7 @@ class RolesController extends HCBaseController
      */
     protected function __restore(array $list)
     {
-        Roles::whereIn('id', $list)->restore();
+        Permissions::whereIn('id', $list)->restore();
     }
 
     /**
@@ -153,9 +157,9 @@ class RolesController extends HCBaseController
         $with = [];
 
         if ($select == null)
-            $select = Roles::getFillableFields();
+            $select = Permissions::getFillableFields();
 
-        $list = Roles::with($with)->select($select)
+        $list = Permissions::with($with)->select($select)
             // add filters
             ->where(function ($query) use ($select) {
                 $query = $this->getRequestParameters($query, $select);
@@ -185,7 +189,8 @@ class RolesController extends HCBaseController
 
             $list = $list->where(function ($query) use ($parameter) {
                 $query->where('name', 'LIKE', '%' . $parameter . '%')
-                    ->orWhere('slug', 'LIKE', '%' . $parameter . '%');
+                    ->orWhere('controller', 'LIKE', '%' . $parameter . '%')
+                    ->orWhere('action', 'LIKE', '%' . $parameter . '%');
             });
         }
 
@@ -199,12 +204,13 @@ class RolesController extends HCBaseController
      */
     protected function getInputData()
     {
-        (new RolesValidator())->validateForm();
+        (new PermissionsValidator())->validateForm();
 
         $_data = request()->all();
 
         array_set($data, 'record.name', array_get($_data, 'name'));
-        array_set($data, 'record.slug', array_get($_data, 'slug'));
+        array_set($data, 'record.controller', array_get($_data, 'controller'));
+        array_set($data, 'record.action', array_get($_data, 'action'));
 
         return $data;
     }
@@ -219,9 +225,9 @@ class RolesController extends HCBaseController
     {
         $with = [];
 
-        $select = Roles::getFillableFields();
+        $select = Permissions::getFillableFields();
 
-        $record = Roles::with($with)
+        $record = Permissions::with($with)
             ->select($select)
             ->where('id', $id)
             ->firstOrFail();

@@ -2,7 +2,7 @@
 
 namespace interactivesolutions\honeycombapps\app\forms\apps;
 
-class PermissionsForm
+class HCPermissionsForm
 {
     // name of the form
     protected $formID = 'apps-permissions';

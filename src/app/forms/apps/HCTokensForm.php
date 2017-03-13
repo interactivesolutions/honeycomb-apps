@@ -29,30 +29,30 @@ class HCTokensForm
             ],
             'structure'  => [
                 [
-    "type"            => "singleLine",
-    "fieldID"         => "value",
-    "label"           => trans("HCApps::apps_tokens.value"),
-    "required"        => 0,
-    "requiredVisible" => 0,
-],[
-    "type"            => "singleLine",
-    "fieldID"         => "app_id",
-    "label"           => trans("HCApps::apps_tokens.app_id"),
-    "required"        => 1,
-    "requiredVisible" => 1,
-],[
-    "type"            => "singleLine",
-    "fieldID"         => "expiration_date",
-    "label"           => trans("HCApps::apps_tokens.expiration_date"),
-    "required"        => 1,
-    "requiredVisible" => 1,
-],[
-    "type"            => "singleLine",
-    "fieldID"         => "last_used",
-    "label"           => trans("HCApps::apps_tokens.last_used"),
-    "required"        => 0,
-    "requiredVisible" => 0,
-],
+                    "type"            => "singleLine",
+                    "fieldID"         => "value",
+                    "label"           => trans("HCApps::apps_tokens.value"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ], [
+                    "type"            => "singleLine",
+                    "fieldID"         => "app_id",
+                    "label"           => trans("HCApps::apps_tokens.app_id"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                ], [
+                    "type"            => "singleLine",
+                    "fieldID"         => "expiration_date",
+                    "label"           => trans("HCApps::apps_tokens.expiration_date"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                ], [
+                    "type"            => "singleLine",
+                    "fieldID"         => "last_used",
+                    "label"           => trans("HCApps::apps_tokens.last_used"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
             ],
         ];
 

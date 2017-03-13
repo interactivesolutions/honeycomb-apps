@@ -2,7 +2,7 @@
 
 namespace interactivesolutions\honeycombapps\app\forms\apps;
 
-class RolesForm
+class HCRolesForm
 {
     // name of the form
     protected $formID = 'apps-roles';
