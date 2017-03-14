@@ -100,10 +100,9 @@ class HCAppsPermissions extends HCCommand
      */
     private function createPermissions (array $aclData)
     {
-        if (array_key_exists ('actionsApps', $aclData)) {
-            foreach ($aclData['actionsApps'] as $permission) {
+        if (array_key_exists ('permissions', $aclData)) {
+            foreach ($aclData['permissions'] as $permission) {
                 $this->removeDeletedPermissions ($permission);
-
                 foreach ($permission['actionsApps'] as $action) {
                     $permissionId = Permissions::firstOrCreate ([
                         'name'       => $permission['name'],
@@ -124,7 +123,7 @@ class HCAppsPermissions extends HCCommand
      */
     private function removeDeletedPermissions (array $permission)
     {
-        $configActions = collect ($permission['actions']);
+        $configActions = collect ($permission['actionsApps']);
 
         $actions = Permissions::where ('name', $permission['name'])->pluck ('action');
 
