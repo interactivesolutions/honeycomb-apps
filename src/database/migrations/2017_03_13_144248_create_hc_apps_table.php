@@ -18,6 +18,8 @@ class CreateHcAppsTable extends Migration {
 			$table->integer('count', true);
 			$table->string('app_id', 45)->unique('app_id_UNIQUE');
 			$table->string('secret', 45);
+			$table->string('name', 255);
+			$table->tinyInteger('active');
 			$table->timestamps();
 			$table->softDeletes();
 		});
