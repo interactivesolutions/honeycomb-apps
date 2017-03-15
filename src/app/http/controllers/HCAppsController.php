@@ -1,14 +1,48 @@
 <?php namespace interactivesolutions\honeycombapps\app\http\controllers;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use interactivesolutions\honeycombapps\app\models\apps\Tokens;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombapps\app\models\HCApps;
 use interactivesolutions\honeycombapps\app\validators\HCAppsValidator;
+
 
 class HCAppsController extends HCBaseController
 {
 
     //TODO recordsPerPage setting
+
+    public function showLogin()
+    {
+        return view('HCApps::auth.login');
+    }
+
+    public function login()
+    {
+        $app = HCApps::where('id', request()->id)->where('secret', request()->secret)->first();
+        if ($app && $app->active == 1) {
+
+            $token = str_random(255);
+
+
+
+            Tokens::create([
+                'value'      => $token,
+                'app_id'     => request()->id,
+                'expires_at' => Carbon::now()->addMinutes(env('HC_API_TOKEN_LIFESPAN', 86400))->toDateTimeString()
+            ]);
+
+            return response(['success' => true, 'token' => $token]);
+        }
+
+        return response(['success' => false, 'message' => 'AUTH-002 - ' . trans('HCApps::users.errors.login')]);
+    }
+
+    public function logout()
+    {
+        Tokens::where('value', request()->token)->delete();
+    }
 
     /**
      * Returning configured admin view
