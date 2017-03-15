@@ -2,8 +2,9 @@
 
 namespace interactivesolutions\honeycombapps\app\providers;
 
+use interactivesolutions\honeycombapps\app\http\middleware\AuthApps;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use interactivesolutions\honeycombapps\app\console\commands\HCAppsPermissions;
 
 class HCAppsServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,6 @@ class HCAppsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        HCAppsPermissions::class
     ];
 
     protected $namespace = 'interactivesolutions\honeycombapps\app\http\controllers';
@@ -21,7 +21,7 @@ class HCAppsServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(Router $router)
     {
         // register artisan commands
         $this->commands($this->commands);
@@ -43,6 +43,9 @@ class HCAppsServiceProvider extends ServiceProvider
 
         //register providers
         $this->registerProviders();
+
+        //register middleware
+        $this->registerMiddleware($router);
     }
 
     /**
@@ -76,6 +79,15 @@ class HCAppsServiceProvider extends ServiceProvider
             $this->publishes ([
                 __DIR__ . '/../public' => public_path ('honeycomb'),
             ], 'public');
+    }
+
+    /**
+     * @param $gate
+     * @param $router
+     */
+    private function registerMiddleware (Router $router)
+    {
+        $router->middleware ('auth-apps', AuthApps::class);
     }
 
     /**
