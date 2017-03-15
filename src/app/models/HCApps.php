@@ -18,6 +18,6 @@ class HCApps extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'app_id', 'secret'];
+    protected $fillable = ['id', 'secret'];
 
 }

@@ -15,12 +15,11 @@ class CreateHcAppsTokensTable extends Migration {
 		Schema::create('hc_apps_tokens', function(Blueprint $table)
 		{
 			$table->integer('count', true);
-			$table->string('value', 768)->nullable();
+			$table->string('value', 255)->nullable();
 			$table->string('app_id', 36)->index('fk_hc_apps_tokens_hc_apps1_idx');
-			$table->date('expiration_date');
-			$table->date('last_used')->nullable();
+			$table->dateTime('expires_at');
+			$table->dateTime('last_used')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 		});
 	}
 

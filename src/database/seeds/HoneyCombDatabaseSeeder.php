@@ -12,6 +12,5 @@ class HoneyCombDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AppsRolesSeeder::class);
     }
 }

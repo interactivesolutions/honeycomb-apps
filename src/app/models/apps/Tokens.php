@@ -2,9 +2,9 @@
 
 namespace interactivesolutions\honeycombapps\app\models\apps;
 
-use interactivesolutions\honeycombcore\models\HCUuidModel;
+use interactivesolutions\honeycombcore\models\HCModel;
 
-class Tokens extends HCUuidModel
+class Tokens extends HCModel
 {
     /**
      * The database table used by the model.
@@ -18,6 +18,13 @@ class Tokens extends HCUuidModel
      *
      * @var array
      */
-    protected $fillable = ['value', 'app_id', 'expiration_date', 'last_used'];
+    protected $fillable = ['value', 'app_id', 'expires_at', 'last_used'];
+
+    /**
+     * We set different primary key
+     *
+     * @var string
+     */
+    public $primaryKey  = 'value';
 
 }
