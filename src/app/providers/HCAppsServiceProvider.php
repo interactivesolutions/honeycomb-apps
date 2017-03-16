@@ -8,11 +8,8 @@ use interactivesolutions\honeycombcore\providers\HCBaseServiceProvider;
 
 class HCAppsServiceProvider extends HCBaseServiceProvider
 {
-    /**
-     * Register commands
-     *
-     * @var array
-     */
+    protected $homeDirectory = __DIR__;
+
     protected $commands = [];
 
     protected $namespace = 'interactivesolutions\honeycombapps\app\http\controllers';
