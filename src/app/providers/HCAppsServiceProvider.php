@@ -20,7 +20,7 @@ class HCAppsServiceProvider extends HCBaseServiceProvider
     /**
      * @param Router $router
      */
-    protected function registerMiddleware (Router $router)
+    protected function registerRouterItems (Router $router)
     {
         $router->middleware ('auth-apps', AuthApps::class);
     }
