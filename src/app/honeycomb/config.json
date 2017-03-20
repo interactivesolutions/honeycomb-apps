@@ -16,18 +16,6 @@
             "aclPermission": "interactivesolutions_honeycomb_apps_apps_list",
             "children": [
                 {
-                    "path": "admin\/apps\/permissions",
-                    "translation": "HCApps::apps_permissions.page_title",
-                    "icon": "fa-gavel",
-                    "aclPermission": "interactivesolutions_honeycomb_apps_apps_permissions_list"
-                },
-                {
-                    "path": "admin\/apps\/roles",
-                    "translation": "HCApps::apps_roles.page_title",
-                    "icon": "fa-puzzle-piece",
-                    "aclPermission": "interactivesolutions_honeycomb_apps_apps_roles_list"
-                },
-                {
                     "path": "admin\/apps\/tokens",
                     "translation": "HCApps::apps_tokens.page_title",
                     "icon": "fa-check-square-o",
