@@ -13,6 +13,7 @@ class HCAppsServiceProvider extends HCBaseServiceProvider
     protected $commands = [];
 
     protected $namespace = 'interactivesolutions\honeycombapps\app\http\controllers';
+    public $serviceProviderNameSpace = 'HCApps';
 
     /**
      * @param Router $router
