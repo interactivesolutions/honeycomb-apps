@@ -3,8 +3,8 @@
 <body>
 
 <form action="{{ route('api.v1.api.login') }}" method="post">
-    Id:<br>
-    <input type="text" name="id">
+    Name:<br>
+    <input type="text" name="name">
     <br>
     Secret:<br>
     <input type="text" name="secret">
