@@ -12,7 +12,7 @@ class HCAppsValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'app_id' => 'required',
+            'name' => 'required',
             'secret' => 'required',
 
         ];

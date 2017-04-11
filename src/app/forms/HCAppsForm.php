@@ -30,11 +30,12 @@ class HCAppsForm
             'structure'  => [
                 [
                     "type"            => "singleLine",
-                    "fieldID"         => "app_id",
-                    "label"           => trans("HCApps::apps.app_id"),
+                    "fieldID"         => "name",
+                    "label"           => trans("HCApps::apps.name"),
                     "required"        => 1,
                     "requiredVisible" => 1,
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "secret",
                     "label"           => trans("HCApps::apps.secret"),
