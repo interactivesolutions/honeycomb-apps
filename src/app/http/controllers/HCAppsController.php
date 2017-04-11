@@ -20,16 +20,14 @@ class HCAppsController extends HCBaseController
 
     public function login()
     {
-        $app = HCApps::where('id', request()->id)->where('secret', request()->secret)->first();
+        $app = HCApps::where('name', request()->name)->where('secret', request()->secret)->first();
         if ($app && $app->active == 1) {
 
             $token = str_random(255);
 
-
-
             Tokens::create([
                 'value'      => $token,
-                'app_id'     => request()->id,
+                'app_name'     => request()->name,
                 'expires_at' => Carbon::now()->addMinutes(env('HC_API_TOKEN_LIFESPAN', 86400))->toDateTimeString()
             ]);
 
@@ -85,15 +83,19 @@ class HCAppsController extends HCBaseController
     public function getAdminListHeader()
     {
         return [
-            'app_id' => [
+            'name' => [
                 "type"  => "text",
-                "label" => trans('HCApps::apps.app_id'),
+                "label" => trans('HCApps::apps.name'),
             ],
             'secret' => [
                 "type"  => "text",
                 "label" => trans('HCApps::apps.secret'),
             ],
-
+            'active'       => [
+                "type"  => "checkbox",
+                "label" => trans('HCApps::apps.active'),
+                "url"   => route('admin.api.apps.update.strict', 'id')
+                ]
         ];
     }
 
@@ -218,7 +220,7 @@ class HCAppsController extends HCBaseController
             $parameter = request()->input('q');
 
             $list = $list->where(function ($query) use ($parameter) {
-                $query->where('app_id', 'LIKE', '%' . $parameter . '%')
+                $query->where('name', 'LIKE', '%' . $parameter . '%')
                     ->orWhere('secret', 'LIKE', '%' . $parameter . '%');
             });
         }
@@ -237,7 +239,7 @@ class HCAppsController extends HCBaseController
 
         $_data = request()->all();
 
-        array_set($data, 'record.app_id', array_get($_data, 'app_id'));
+        array_set($data, 'record.name', array_get($_data, 'name'));
         array_set($data, 'record.secret', array_get($_data, 'secret'));
 
         return $data;
