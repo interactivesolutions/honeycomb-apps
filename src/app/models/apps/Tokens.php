@@ -18,7 +18,7 @@ class Tokens extends HCModel
      *
      * @var array
      */
-    protected $fillable = ['value', 'app_id', 'expires_at', 'last_used'];
+    protected $fillable = ['value', 'app_name', 'expires_at', 'last_used'];
 
     /**
      * We set different primary key

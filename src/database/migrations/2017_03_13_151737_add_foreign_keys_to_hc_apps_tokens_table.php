@@ -14,7 +14,7 @@ class AddForeignKeysToHcAppsTokensTable extends Migration {
 	{
 		Schema::table('hc_apps_tokens', function(Blueprint $table)
 		{
-			$table->foreign('app_id', 'fk_hc_apps_tokens_hc_apps1')->references('id')->on('hc_apps')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('app_name', 'fk_hc_apps_tokens_hc_apps1')->references('name')->on('hc_apps')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
