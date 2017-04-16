@@ -4,6 +4,8 @@ return [
     'expires_at' => 'Expires at',
     'token'      => 'Token',
     'app_id'     => 'App id',
-    'token_note' => 'Double click and copy'
+    'token_note' => 'Double click and copy',
+    'missing'    => 'Token missing',
+    'not_found'  => 'Token not found',
 
 ];
