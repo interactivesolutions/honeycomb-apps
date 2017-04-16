@@ -12,7 +12,7 @@ class HCAppsServiceProvider extends HCBaseServiceProvider
 
     protected $namespace = 'interactivesolutions\honeycombapps\app\http\controllers';
 
-    public $serviceProviderNameSpace = '{serviceProviderNameSpace}';
+    public $serviceProviderNameSpace = 'HCApps';
 }
 
 
