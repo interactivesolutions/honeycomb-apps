@@ -18,13 +18,15 @@ class HCAuthApps
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->token)
+        $token = $request->header('Hc-Token');
+
+        if (!$token)
             return HCLog::error('APP-001', trans(trans ("HCApps::apps_tokens.missing")));
 
-        $record = HCAppsTokens::where('token', $request->token)->where('expires_at', '>=', Carbon::now())->first();
+        $record = HCAppsTokens::where('token', $token)->where('expires_at', '>=', Carbon::now())->first();
 
         if (!$record)
-            return HCLog::error('APP-002', trans ("HCApps::apps_tokens.not_found_or_expired"));
+            return HCLog::error('APP-002', trans ("HCApps::apps_tokens.not_found"));
 
         //TODO add this value in hc:env command
         $extendLifeSpan = env('HC_API_TOKEN_LIFESPAN_EXPAND', 0);
