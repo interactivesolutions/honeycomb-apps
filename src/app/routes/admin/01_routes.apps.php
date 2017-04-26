@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function ()
+Route::group(['prefix' => env('HC_ADMIN_URL'), 'middleware' => ['web', 'auth']], function ()
 {
     Route::get('apps', ['as' => 'admin.apps.index', 'middleware' => ['acl:interactivesolutions_honeycomb_apps_apps_list'], 'uses' => 'HCAppsController@adminView']);
 
