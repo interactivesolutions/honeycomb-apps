@@ -1,12 +1,12 @@
 <?php
 
-Route::group(['prefix' => 'api', 'middleware' => ['web', 'auth-apps']], function ()
+Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
 {
     Route::group(['prefix' => 'v1/apps/tokens'], function ()
     {
         Route::get('/', ['as' => 'api.v1.apps.tokens', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@listPage']);
         Route::get('list', ['as' => 'api.v1.apps.tokens.list', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@list']);
-        Route::get('list/{timestamp}', ['as' => 'api.v1.apps.tokens.list.update', 'middleware' => ['acl:interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@listUpdate']);
+        Route::get('list/{timestamp}', ['as' => 'api.v1.apps.tokens.list.update', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@listUpdate']);
         Route::get('search', ['as' => 'api.v1.apps.tokens.search', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@listSearch']);
         Route::get('{id}', ['as' => 'api.v1.apps.tokens.single', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@getSingleRecord']);
 
