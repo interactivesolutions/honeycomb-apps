@@ -15,7 +15,7 @@ class HCAppsController extends HCBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function adminView ()
+    public function adminIndex ()
     {
         $config = [
             'title'       => trans ('HCApps::apps.page_title'),
@@ -26,15 +26,15 @@ class HCAppsController extends HCBaseController
             'headers'     => $this->getAdminListHeader (),
         ];
 
-        if ($this->user ()->can ('interactivesolutions_honeycomb_apps_apps_create'))
+        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_create'))
             $config['actions'][] = 'new';
 
-        if ($this->user ()->can ('interactivesolutions_honeycomb_apps_apps_update')) {
+        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if ($this->user ()->can ('interactivesolutions_honeycomb_apps_apps_delete'))
+        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_delete'))
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
@@ -94,7 +94,7 @@ class HCAppsController extends HCBaseController
         $list = $this->checkForDeleted ($list);
 
         // add search items
-        $list = $this->listSearch ($list);
+        $list = $this->search ($list);
 
         // ordering data
         $list = $this->orderData ($list, $select);
@@ -107,7 +107,7 @@ class HCAppsController extends HCBaseController
      * @param $list
      * @return mixed
      */
-    protected function listSearch (Builder $list)
+    protected function searchQuery (Builder $list)
     {
         if (request ()->has ('q')) {
             $parameter = request ()->input ('q');
@@ -126,14 +126,14 @@ class HCAppsController extends HCBaseController
      * @param array|null $data
      * @return mixed
      */
-    protected function __create (array $data = null)
+    protected function __apiStore (array $data = null)
     {
         if (is_null ($data))
             $data = $this->getInputData ();
 
         $record = HCApps::create (array_get ($data, 'record'));
 
-        return $this->getSingleRecord ($record->id);
+        return $this->apiShow ($record->id);
     }
 
     /**
@@ -158,7 +158,7 @@ class HCAppsController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    public function getSingleRecord (string $id)
+    public function apiShow (string $id)
     {
         $with = [];
 
@@ -178,7 +178,7 @@ class HCAppsController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    protected function __update (string $id)
+    protected function __apiUpdate (string $id)
     {
         $record = HCApps::findOrFail ($id);
 
@@ -186,7 +186,7 @@ class HCAppsController extends HCBaseController
 
         $record->update (array_get ($data, 'record'));
 
-        return $this->getSingleRecord ($record->id);
+        return $this->apiShow ($record->id);
     }
 
     /**
@@ -195,11 +195,11 @@ class HCAppsController extends HCBaseController
      * @param string $id
      * @return mixed
      */
-    protected function __updateStrict (string $id)
+    protected function __apiUpdateStrict (string $id)
     {
         HCApps::where ('id', $id)->update (request ()->all ());
 
-        return $this->getSingleRecord ($id);
+        return $this->apiShow ($id);
     }
 
     /**
@@ -208,7 +208,7 @@ class HCAppsController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __delete (array $list)
+    protected function __apiDestroy (array $list)
     {
         HCApps::destroy ($list);
     }
@@ -219,7 +219,7 @@ class HCAppsController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __forceDelete (array $list)
+    protected function __apiForceDelete (array $list)
     {
         HCApps::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
     }
@@ -230,7 +230,7 @@ class HCAppsController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __restore (array $list)
+    protected function __apiRestore (array $list)
     {
         HCApps::whereIn ('id', $list)->restore ();
     }

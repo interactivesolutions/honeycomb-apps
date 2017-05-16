@@ -15,7 +15,7 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function adminView ()
+    public function adminIndex ()
     {
         $config = [
             'title'       => trans ('HCApps::apps_tokens.page_title'),
@@ -26,15 +26,15 @@ class HCAppsTokensController extends HCBaseController
             'headers'     => $this->getAdminListHeader (),
         ];
 
-        if ($this->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_create'))
+        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_create'))
             $config['actions'][] = 'new';
 
-        if ($this->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_update')) {
+        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if ($this->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_delete'))
+        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_delete'))
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
@@ -98,7 +98,7 @@ class HCAppsTokensController extends HCBaseController
         $list = $this->checkForDeleted ($list);
 
         // add search items
-        $list = $this->listSearch ($list);
+        $list = $this->search ($list);
 
         // ordering data
         $list = $this->orderData ($list, $select);
@@ -111,7 +111,7 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed
      */
-    protected function listSearch (Builder $list)
+    protected function searchQuery (Builder $list)
     {
         if (request ()->has ('q')) {
             $parameter = request ()->input ('q');
@@ -131,13 +131,13 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return mixed
      */
-    protected function __create ()
+    protected function __apiStore ()
     {
         $data = $this->getInputData ();
 
         $record = HCAppsTokens::create (array_get ($data, 'record'));
 
-        return $this->getSingleRecord ($record->id);
+        return $this->apiShow ($record->id);
     }
 
     /**
@@ -169,7 +169,7 @@ class HCAppsTokensController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    public function getSingleRecord (string $id)
+    public function apiShow (string $id)
     {
         $with = [];
 
@@ -189,7 +189,7 @@ class HCAppsTokensController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    protected function __update (string $id)
+    protected function __apiUpdate (string $id)
     {
         $record = HCAppsTokens::findOrFail ($id);
 
@@ -197,7 +197,7 @@ class HCAppsTokensController extends HCBaseController
 
         $record->update (array_get ($data, 'record'));
 
-        return $this->getSingleRecord ($record->id);
+        return $this->apiShow ($record->id);
     }
 
     /**
@@ -206,11 +206,11 @@ class HCAppsTokensController extends HCBaseController
      * @param string $id
      * @return mixed
      */
-    protected function __updateStrict (string $id)
+    protected function __apiUpdateStrict (string $id)
     {
         HCAppsTokens::where ('id', $id)->update (request ()->all ());
 
-        return $this->getSingleRecord ($id);
+        return $this->apiShow ($id);
     }
 
     /**
@@ -219,7 +219,7 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __delete (array $list)
+    protected function __apiDestroy (array $list)
     {
         HCAppsTokens::destroy ($list);
     }
@@ -230,7 +230,7 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __forceDelete (array $list)
+    protected function __apiForceDelete (array $list)
     {
         HCAppsTokens::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
     }
@@ -241,7 +241,7 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed|void
      */
-    protected function __restore (array $list)
+    protected function __apiRestore (array $list)
     {
         HCAppsTokens::whereIn ('id', $list)->restore ();
     }
