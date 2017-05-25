@@ -108,22 +108,17 @@ class HCAppsTokensController extends HCBaseController
 
     /**
      * List search elements
-     * @param $list
-     * @return mixed
+     * @param Builder $query
+     * @param string $phrase
+     * @return Builder
      */
-    protected function searchQuery (Builder $list)
+    protected function searchQuery(Builder $query, string $phrase)
     {
-        if (request ()->has ('q')) {
-            $parameter = request ()->input ('q');
-
-            $list = $list->where (function ($query) use ($parameter) {
-                $query->where ('expires_at', 'LIKE', '%' . $parameter . '%')
-                      ->orWhere ('token', 'LIKE', '%' . $parameter . '%')
-                      ->orWhere ('app_id', 'LIKE', '%' . $parameter . '%');
-            });
-        }
-
-        return $list;
+        return $query->where (function (Builder $query) use ($phrase) {
+            $query->where ('expires_at', 'LIKE', '%' . $phrase . '%')
+                  ->orWhere ('token', 'LIKE', '%' . $phrase . '%')
+                  ->orWhere ('app_id', 'LIKE', '%' . $phrase . '%');
+        });
     }
 
     /**
