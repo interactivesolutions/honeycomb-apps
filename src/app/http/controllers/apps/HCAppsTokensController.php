@@ -88,8 +88,8 @@ class HCAppsTokensController extends HCBaseController
         if ($select == null)
             $select = HCAppsTokens::getFillableFields ();
 
-        $list = HCAppsTokens::with ($with)->select ($select)
-            // add filters
+        $list = HCAppsTokens::with ($with)
+                            ->select ($select)
                             ->where (function ($query) use ($select) {
                 $query = $this->getRequestParameters ($query, $select);
             });
