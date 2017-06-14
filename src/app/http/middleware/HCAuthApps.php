@@ -29,7 +29,7 @@ class HCAuthApps
             return HCLog::error('APP-002', trans ("HCApps::apps_tokens.not_found"));
 
         //TODO add this value in hc:env command
-        $extendLifeSpan = env('HC_API_TOKEN_LIFESPAN_EXPAND', 0);
+        $extendLifeSpan = config('hc.api_token_lifespan_expand');
 
         if ($extendLifeSpan > 0)
         {
