@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => env('HC_ADMIN_URL'), 'middleware' => ['web', 'auth']], function ()
+Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
 {
     Route::get('apps/tokens', ['as' => 'admin.apps.tokens.index', 'middleware' => ['acl:interactivesolutions_honeycomb_apps_apps_tokens_list'], 'uses' => 'apps\\HCAppsTokensController@adminIndex']);
 
