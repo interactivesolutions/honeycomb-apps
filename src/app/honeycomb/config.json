@@ -8,18 +8,20 @@
     },
     "adminMenu": [
         {
-            "path": "admin\/apps",
+            "path": "admin/apps",
+            "parent": "admin/hc",
+            "route": "admin.apps.index",
             "translation": "HCApps::apps.page_title",
             "icon": "fa-microchip",
-            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list",
-            "children":[
-                {
-                    "path": "admin\/apps\/tokens",
-                    "translation": "HCApps::apps_tokens.page_title",
-                    "icon": "fa-key",
-                    "aclPermission": "interactivesolutions_honeycomb_apps_apps_tokens_list"
-                }
-            ]
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list"
+        },
+        {
+            "path": "admin/apps/tokens",
+            "parent": "admin/apps",
+            "route": "admin.apps.tokens.index",
+            "translation": "HCApps::apps_tokens.page_title",
+            "icon": "fa-key",
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_tokens_list"
         }
     ],
     "acl": {
