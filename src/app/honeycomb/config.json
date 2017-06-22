@@ -12,7 +12,8 @@
             "parent": "admin.index",
             "translation": "HCApps::apps.page_title",
             "icon": "fa-microchip",
-            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list"
+            "aclPermission": "interactivesolutions_honeycomb_apps_apps_list",
+            "priority": 7
         },
         {
             "route": "admin.apps.tokens.index",
