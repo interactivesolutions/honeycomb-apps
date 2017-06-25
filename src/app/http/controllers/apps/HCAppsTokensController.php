@@ -212,32 +212,38 @@ class HCAppsTokensController extends HCBaseController
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiDestroy (array $list)
     {
         HCAppsTokens::destroy ($list);
+
+        return hcSuccess();
     }
 
     /**
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiForceDelete (array $list)
     {
         HCAppsTokens::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+
+        return hcSuccess();
     }
 
     /**
      * Restore multiple records
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiRestore (array $list)
     {
         HCAppsTokens::whereIn ('id', $list)->restore ();
+
+        return hcSuccess();
     }
 }
