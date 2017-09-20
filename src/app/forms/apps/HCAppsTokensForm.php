@@ -50,7 +50,7 @@ class HCAppsTokensForm
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "properties"      => [
-                        "format" => "Y-M-D HH:mm:ss",
+                        "format" => "YYYY-MM-DD HH:mm:ss",
                     ],
                 ],
             ],
