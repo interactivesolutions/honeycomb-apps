@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombapps\app\models\apps\HCAppsTokens;
 use interactivesolutions\honeycombapps\app\validators\apps\HCAppsTokensValidator;
-use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
+use InteractiveSolutions\HoneycombCore\Http\Controllers\HCBaseController;
 
 class HCAppsTokensController extends HCBaseController
 {
@@ -15,32 +15,34 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function adminIndex ()
+    public function adminIndex()
     {
         $config = [
-            'title'       => trans ('HCApps::apps_tokens.page_title'),
-            'listURL'     => route ('admin.api.apps.tokens'),
-            'newFormUrl'  => route ('admin.api.form-manager', ['apps-tokens-new']),
-            'editFormUrl' => route ('admin.api.form-manager', ['apps-tokens-edit']),
-            'imagesUrl'   => route ('resource.get', ['/']),
-            'headers'     => $this->getAdminListHeader (),
+            'title' => trans('HCApps::apps_tokens.page_title'),
+            'listURL' => route('admin.api.apps.tokens'),
+            'newFormUrl' => route('admin.api.form-manager', ['apps-tokens-new']),
+            'editFormUrl' => route('admin.api.form-manager', ['apps-tokens-edit']),
+            'imagesUrl' => route('resource.get', ['/']),
+            'headers' => $this->getAdminListHeader(),
         ];
 
-        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_create'))
+        if (auth()->user()->can('interactivesolutions_honeycomb_apps_apps_tokens_create')) {
             $config['actions'][] = 'new';
+        }
 
-        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_update')) {
+        if (auth()->user()->can('interactivesolutions_honeycomb_apps_apps_tokens_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if (auth()->user ()->can ('interactivesolutions_honeycomb_apps_apps_tokens_delete'))
+        if (auth()->user()->can('interactivesolutions_honeycomb_apps_apps_tokens_delete')) {
             $config['actions'][] = 'delete';
+        }
 
         $config['actions'][] = 'search';
-        $config['filters']   = $this->getFilters ();
+        $config['filters'] = $this->getFilters();
 
-        return view ('HCCoreUI::admin.content.list', ['config' => $config]);
+        return view('HCCoreUI::admin.content.list', ['config' => $config]);
     }
 
     /**
@@ -48,16 +50,16 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return array
      */
-    public function getAdminListHeader ()
+    public function getAdminListHeader()
     {
         return [
             'expires_at' => [
-                "type"  => "text",
-                "label" => trans ('HCApps::apps_tokens.expires_at'),
+                "type" => "text",
+                "label" => trans('HCApps::apps_tokens.expires_at'),
             ],
-            'app_id'     => [
-                "type"  => "text",
-                "label" => trans ('HCApps::apps_tokens.app_id'),
+            'app_id' => [
+                "type" => "text",
+                "label" => trans('HCApps::apps_tokens.app_id'),
             ],
 
         ];
@@ -68,7 +70,7 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return array
      */
-    public function getFilters ()
+    public function getFilters()
     {
         $filters = [];
 
@@ -81,27 +83,28 @@ class HCAppsTokensController extends HCBaseController
      * @param array $select
      * @return mixed
      */
-    public function createQuery (array $select = null)
+    public function createQuery(array $select = null)
     {
         $with = [];
 
-        if ($select == null)
-            $select = HCAppsTokens::getFillableFields ();
+        if ($select == null) {
+            $select = HCAppsTokens::getFillableFields();
+        }
 
-        $list = HCAppsTokens::with ($with)
-                            ->select ($select)
-                            ->where (function ($query) use ($select) {
-                $query = $this->getRequestParameters ($query, $select);
+        $list = HCAppsTokens::with($with)
+            ->select($select)
+            ->where(function($query) use ($select) {
+                $query = $this->getRequestParameters($query, $select);
             });
 
         // enabling check for deleted
-        $list = $this->checkForDeleted ($list);
+        $list = $this->checkForDeleted($list);
 
         // add search items
-        $list = $this->search ($list);
+        $list = $this->search($list);
 
         // ordering data
-        $list = $this->orderData ($list, $select);
+        $list = $this->orderData($list, $select);
 
         return $list;
     }
@@ -114,10 +117,10 @@ class HCAppsTokensController extends HCBaseController
      */
     protected function searchQuery(Builder $query, string $phrase)
     {
-        return $query->where (function (Builder $query) use ($phrase) {
-            $query->where ('expires_at', 'LIKE', '%' . $phrase . '%')
-                  ->orWhere ('token', 'LIKE', '%' . $phrase . '%')
-                  ->orWhere ('app_id', 'LIKE', '%' . $phrase . '%');
+        return $query->where(function(Builder $query) use ($phrase) {
+            $query->where('expires_at', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('token', 'LIKE', '%' . $phrase . '%')
+                ->orWhere('app_id', 'LIKE', '%' . $phrase . '%');
         });
     }
 
@@ -126,13 +129,13 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return mixed
      */
-    protected function __apiStore ()
+    protected function __apiStore()
     {
-        $data = $this->getInputData ();
+        $data = $this->getInputData();
 
-        $record = HCAppsTokens::create (array_get ($data, 'record'));
+        $record = HCAppsTokens::create(array_get($data, 'record'));
 
-        return $this->apiShow ($record->id);
+        return $this->apiShow($record->id);
     }
 
     /**
@@ -140,20 +143,21 @@ class HCAppsTokensController extends HCBaseController
      *
      * @return mixed
      */
-    protected function getInputData ()
+    protected function getInputData()
     {
-        (new HCAppsTokensValidator())->validateForm ();
+        (new HCAppsTokensValidator())->validateForm();
 
-        $_data = request ()->all ();
+        $_data = request()->all();
 
-        $token = array_get ($_data, 'token');
+        $token = array_get($_data, 'token');
 
-        if (strlen($token) != 255)
+        if (strlen($token) != 255) {
             $token = random_str(255);
+        }
 
-        array_set ($data, 'record.expires_at', array_get ($_data, 'expires_at'));
-        array_set ($data, 'record.token', $token);
-        array_set ($data, 'record.app_id', array_get ($_data, 'app_id'));
+        array_set($data, 'record.expires_at', array_get($_data, 'expires_at'));
+        array_set($data, 'record.token', $token);
+        array_set($data, 'record.app_id', array_get($_data, 'app_id'));
 
         return $data;
     }
@@ -164,16 +168,16 @@ class HCAppsTokensController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    public function apiShow (string $id)
+    public function apiShow(string $id)
     {
         $with = [];
 
-        $select = HCAppsTokens::getFillableFields ();
+        $select = HCAppsTokens::getFillableFields();
 
-        $record = HCAppsTokens::with ($with)
-                              ->select ($select)
-                              ->where ('id', $id)
-                              ->firstOrFail ();
+        $record = HCAppsTokens::with($with)
+            ->select($select)
+            ->where('id', $id)
+            ->firstOrFail();
 
         return $record;
     }
@@ -184,15 +188,15 @@ class HCAppsTokensController extends HCBaseController
      * @param $id
      * @return mixed
      */
-    protected function __apiUpdate (string $id)
+    protected function __apiUpdate(string $id)
     {
-        $record = HCAppsTokens::findOrFail ($id);
+        $record = HCAppsTokens::findOrFail($id);
 
-        $data = $this->getInputData ();
+        $data = $this->getInputData();
 
-        $record->update (array_get ($data, 'record'));
+        $record->update(array_get($data, 'record'));
 
-        return $this->apiShow ($record->id);
+        return $this->apiShow($record->id);
     }
 
     /**
@@ -201,11 +205,11 @@ class HCAppsTokensController extends HCBaseController
      * @param string $id
      * @return mixed
      */
-    protected function __apiUpdateStrict (string $id)
+    protected function __apiUpdateStrict(string $id)
     {
-        HCAppsTokens::where ('id', $id)->update (request ()->all ());
+        HCAppsTokens::where('id', $id)->update(request()->all());
 
-        return $this->apiShow ($id);
+        return $this->apiShow($id);
     }
 
     /**
@@ -214,9 +218,9 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed
      */
-    protected function __apiDestroy (array $list)
+    protected function __apiDestroy(array $list)
     {
-        HCAppsTokens::destroy ($list);
+        HCAppsTokens::destroy($list);
 
         return hcSuccess();
     }
@@ -227,9 +231,9 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed
      */
-    protected function __apiForceDelete (array $list)
+    protected function __apiForceDelete(array $list)
     {
-        HCAppsTokens::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+        HCAppsTokens::onlyTrashed()->whereIn('id', $list)->forceDelete();
 
         return hcSuccess();
     }
@@ -240,9 +244,9 @@ class HCAppsTokensController extends HCBaseController
      * @param $list
      * @return mixed
      */
-    protected function __apiRestore (array $list)
+    protected function __apiRestore(array $list)
     {
-        HCAppsTokens::whereIn ('id', $list)->restore ();
+        HCAppsTokens::whereIn('id', $list)->restore();
 
         return hcSuccess();
     }

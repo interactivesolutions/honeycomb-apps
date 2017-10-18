@@ -3,7 +3,7 @@
 namespace interactivesolutions\honeycombapps\app\models\apps;
 
 use interactivesolutions\honeycombapps\app\models\traits\AppsRolesPermissions;
-use interactivesolutions\honeycombcore\models\HCUuidModel;
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 class HCAppsTokens extends HCUuidModel
 {

@@ -2,7 +2,8 @@
 
 namespace interactivesolutions\honeycombapps\app\models\apps;
 
-use interactivesolutions\honeycombcore\models\HCUuidModel;
+
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 class HCAppsTokensPermissionsConnections extends HCUuidModel
 {

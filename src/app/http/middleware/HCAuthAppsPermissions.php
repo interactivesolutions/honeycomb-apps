@@ -19,8 +19,9 @@ class HCAuthAppsPermissions
      */
     public function handle($request, Closure $next, string $permission = '')
     {
-        if (!$this->getTokenPermissions($request->header('Hc-Token'))->hasTokenPermission($permission))
-            return HCLog::error('APP-003', trans ("HCApps::apps_tokens.access_denied"));
+        if (!$this->getTokenPermissions($request->header('Hc-Token'))->hasTokenPermission($permission)) {
+            return HCLog::error('APP-003', trans("HCApps::apps_tokens.access_denied"));
+        }
 
         return $next($request);
     }
@@ -29,7 +30,7 @@ class HCAuthAppsPermissions
      * @param $token
      * @return HCAppsTokens
      */
-    public function getTokenPermissions ($token) : HCAppsTokens
+    public function getTokenPermissions($token): HCAppsTokens
     {
         return HCAppsTokens::where('token', $token)->first();
     }

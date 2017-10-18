@@ -10,7 +10,7 @@ trait AppsRolesPermissions
      * @param $permission
      * @return bool
      */
-    public function hasTokenPermission (string $permission)
+    public function hasTokenPermission(string $permission)
     {
         //TODO finalize validating permissions
         return true;

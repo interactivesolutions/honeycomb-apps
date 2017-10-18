@@ -18,58 +18,60 @@ class HCAppsTokensForm
      * @param bool $edit
      * @return array
      */
-    public function createForm (bool $edit = false)
+    public function createForm(bool $edit = false)
     {
         $form = [
-            'storageURL' => route ('admin.api.apps.tokens'),
-            'buttons'    => [
+            'storageURL' => route('admin.api.apps.tokens'),
+            'buttons' => [
                 [
                     "class" => "col-centered",
-                    "label" => trans ('HCTranslations::core.buttons.submit'),
-                    "type"  => "submit",
+                    "label" => trans('HCTranslations::core.buttons.submit'),
+                    "type" => "submit",
                 ],
             ],
-            'structure'  => [
+            'structure' => [
                 [
-                    "type"            => "dropDownList",
-                    "fieldID"         => "app_id",
-                    "label"           => trans ("HCApps::apps_tokens.app_id"),
-                    "required"        => 1,
+                    "type" => "dropDownList",
+                    "fieldID" => "app_id",
+                    "label" => trans("HCApps::apps_tokens.app_id"),
+                    "required" => 1,
                     "requiredVisible" => 1,
-                    "options"         => HCApps::get(),
-                    "search"          => [
+                    "options" => HCApps::get(),
+                    "search" => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
-                        "showNodes" => ['name']
+                        "showNodes" => ['name'],
                     ],
                 ],
                 [
-                    "type"            => "dateTimePicker",
-                    "fieldID"         => "expires_at",
-                    "label"           => trans ("HCApps::apps_tokens.expires_at"),
-                    "required"        => 1,
+                    "type" => "dateTimePicker",
+                    "fieldID" => "expires_at",
+                    "label" => trans("HCApps::apps_tokens.expires_at"),
+                    "required" => 1,
                     "requiredVisible" => 1,
-                    "properties"      => [
+                    "properties" => [
                         "format" => "YYYY-MM-DD HH:mm:ss",
                     ],
                 ],
             ],
         ];
 
-        if ($this->multiLanguage)
-            $form['availableLanguages'] = getHCContentLanguages ();
+        if ($this->multiLanguage) {
+            $form['availableLanguages'] = getHCContentLanguages();
+        }
 
-        if (!$edit)
+        if (!$edit) {
             return $form;
+        }
 
         //Make changes to edit form if needed
-         $form['structure'][] = [
-             "type"            => "singleLine",
-             "fieldID"         => "token",
-             "label"           => trans ("HCApps::apps_tokens.token"),
-             "readonly"        => 1,
-             "note"            => trans("HCApps::apps_tokens.token_note")
-         ];
+        $form['structure'][] = [
+            "type" => "singleLine",
+            "fieldID" => "token",
+            "label" => trans("HCApps::apps_tokens.token"),
+            "readonly" => 1,
+            "note" => trans("HCApps::apps_tokens.token_note"),
+        ];
 
         return $form;
     }

@@ -2,7 +2,8 @@
 
 namespace interactivesolutions\honeycombapps\app\models;
 
-use interactivesolutions\honeycombcore\models\HCUuidModel;
+
+use InteractiveSolutions\HoneycombCore\Models\HCUuidModel;
 
 class HCApps extends HCUuidModel
 {

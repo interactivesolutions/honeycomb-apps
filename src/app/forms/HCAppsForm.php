@@ -16,33 +16,35 @@ class HCAppsForm
      * @param bool $edit
      * @return array
      */
-    public function createForm (bool $edit = false)
+    public function createForm(bool $edit = false)
     {
         $form = [
-            'storageURL' => route ('admin.api.apps'),
-            'buttons'    => [
+            'storageURL' => route('admin.api.apps'),
+            'buttons' => [
                 [
                     "class" => "col-centered",
-                    "label" => trans ('HCTranslations::core.buttons.submit'),
-                    "type"  => "submit",
+                    "label" => trans('HCTranslations::core.buttons.submit'),
+                    "type" => "submit",
                 ],
             ],
-            'structure'  => [
+            'structure' => [
                 [
-                    "type"            => "singleLine",
-                    "fieldID"         => "name",
-                    "label"           => trans ("HCApps::apps.name"),
-                    "required"        => 1,
+                    "type" => "singleLine",
+                    "fieldID" => "name",
+                    "label" => trans("HCApps::apps.name"),
+                    "required" => 1,
                     "requiredVisible" => 1,
                 ],
             ],
         ];
 
-        if ($this->multiLanguage)
-            $form['availableLanguages'] = getHCContentLanguages ();
+        if ($this->multiLanguage) {
+            $form['availableLanguages'] = getHCContentLanguages();
+        }
 
-        if (!$edit)
+        if (!$edit) {
             return $form;
+        }
 
         //Make changes to edit form if needed
         // $form['structure'][] = [];

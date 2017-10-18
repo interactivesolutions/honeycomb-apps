@@ -5,7 +5,7 @@ namespace interactivesolutions\honeycombapps\app\providers;
 use Illuminate\Routing\Router;
 use interactivesolutions\honeycombapps\app\http\middleware\HCAuthApps;
 use interactivesolutions\honeycombapps\app\http\middleware\HCAuthAppsPermissions;
-use interactivesolutions\honeycombcore\providers\HCBaseServiceProvider;
+use InteractiveSolutions\HoneycombCore\Providers\HCBaseServiceProvider;
 
 class HCAppsServiceProvider extends HCBaseServiceProvider
 {
@@ -22,10 +22,10 @@ class HCAppsServiceProvider extends HCBaseServiceProvider
      *
      * @param Router $router
      */
-    protected function registerMiddleWare (Router $router)
+    protected function registerMiddleWare(Router $router)
     {
-        $router->middleware ('auth-apps', HCAuthApps::class);
-        $router->middleware ('acl-apps', HCAuthAppsPermissions::class);
+        $router->middleware('auth-apps', HCAuthApps::class);
+        $router->middleware('acl-apps', HCAuthAppsPermissions::class);
     }
 }
 
